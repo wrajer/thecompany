@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<!--<html lang="en" dir="ltr">-->
+<head>
+    <meta charset="utf-8">
+    <title>Strona z tablica</title>
+
+
+    <link rel="shortcut icon" type="image/png"
+          href="http://jacksonvilleartwalk.com/wp-content/themes/DowntownVision.Wordpress.Theme/images/slides/participate/img-small-artistapply.png">
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
+
+    <style type="text/css" class="init"></style>
+    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" language="javascript"
+            src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript"
+            src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" language="javascript"
+            src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+    <script type="text/javascript" language="javascript"
+            src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" language="javascript"
+            src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+
+
+    <script type="text/javascript" class="init">
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                responsive: true
+            });
+            new $.fn.dataTable.FixedHeader(table);
+        });
+    </script>
+</head>
+<body>
+
+<div class="container" style="width:95%">
+
+    <table id="example" class="table table-striped table-bordered nowrap " style="width:100%">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>No of people</th>
+            <th>No of desks</th>
+            <th>Cost per desk/month</th>
+            <th>Adress</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+
+
+        <tr th:each="office:${dboffices}">
+
+            <td th:text="${office.name}"> </td>
+            <td>TBD</td>
+            <td th:text="${office.noOfDesks}"> </td>
+            <td>TBD</td>
+            <td>
+                <a th:href="@{'https://maps.google.com/?q=term' + ${office.adress}}" th:text="${office.adress}">
+                </a>
+            </td>
+            <td>TBD</td>
+            <td>TBD</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Name</th>
+            <th>No of people</th>
+            <th>No of desks</th>
+            <th>Cost per desk/month</th>
+            <th>Adress</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+        </tfoot>
+    </table>
+
+</div>
+
+</body>
+</html>
