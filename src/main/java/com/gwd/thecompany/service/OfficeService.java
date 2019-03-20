@@ -12,13 +12,9 @@ import java.util.stream.Collectors;
 @Service
 public class OfficeService {
 
-    /*                                                    */
-    /*                        Fields                       */
     private OfficeRepository officeRepository;
     private OfficeMapper officeMapper;
 
-    /*                                                       */
-    /*                       Constructor                      */
 
     public OfficeService(OfficeRepository officeRepository, OfficeMapper officeMapper) {
         this.officeRepository = officeRepository;
@@ -44,7 +40,12 @@ public class OfficeService {
         return officeRepository.save(officeMapper.revers(officeDto));
     }
 
-    public void updatePlanet(OfficeDto officeDto) {
+    public void deleteOffice(String officeName) { //nie pracujemy na ID bo Dto nie posiada ID, przez to poki co nie mozna zmieniać imienia
+        //aby zapisac dodawanie planet musimy zrobić dodatkowego mappera lub poprawić obecnego
+        officeRepository.deleteByOfficeName(officeName);
+    }
+
+    public void updateOffice(OfficeDto officeDto) {
 
         officeRepository
                 .findByOfficeName(officeDto.getName())

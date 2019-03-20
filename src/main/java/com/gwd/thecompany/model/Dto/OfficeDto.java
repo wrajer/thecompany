@@ -16,7 +16,8 @@ public class OfficeDto {
     private Integer noOfDesks;
     private String adress;
     private Float costPerMonth;
-    private List<Employee> employeesList = new ArrayList<>();
+
+    private List<String> employeesList = new ArrayList<>();
 
 
 }

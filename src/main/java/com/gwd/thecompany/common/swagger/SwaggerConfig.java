@@ -20,8 +20,8 @@ public class SwaggerConfig {
 
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("nasaapp.controller")) //daje dostęp do szystkich kontrollerów, ale mozemy napisac tylko odpowiednie odrazy w path Regex
-                .paths(regex("/api/v1/dto/.*"))
+                .apis(RequestHandlerSelectors.basePackage("com.gwd.thecompany.controller")) //daje dostęp do szystkich kontrollerów, ale mozemy napisac tylko odpowiednie odrazy w path Regex
+                .paths(regex("/.*"))
                 .build();
     }
 
