@@ -57,19 +57,94 @@
         </thead>
         <tbody>
 
+        <!--    tr for update-->
 
-        <tr th:each="office:${dboffices}">
+        <tr th:if="${update}">
 
-            <td th:text="${office.name}"> </td>
+           <!-- <form th:action="@{/offices/update/send}" th:object="${officesend}" method="GET" >-->
+            <form th:action="@{/offices/add}" th:object="${office}" method="Post" action="/offices/add">
+
+                <td>
+                    <input type="hidden" name="id" th:field="${officetoupdate.id}">
+                    <input type="text" name="name" th:value="${officetoupdate.name}"   class="form-control">
+                </td>
+
+
+
+                <td>
+                    <button type="submit" th:if="${update}" class="btn btn-primary"><i class="fa fa-plus-square"
+                                                                                       aria-hidden="true"></i> Update
+                    </button>
+                </td>
+
+            </form>
+        </tr>
+
+        <!--    end tr for update-->
+
+    <!--    tr for add-->
+
+     <!--   <tr th:if="!${update}">
+            <form th:action="@{/offices/add}" th:object="${office}" method="Post" action="/offices/add">
+
+                <td>
+                    <input type="text" name="name" placeholder="office name" class="form-control">
+                </td>
+
+                <td>
+                    <input type="text" name="noOfDesks" placeholder="noOfDesks" class="form-control">
+                </td>
+
+                <td>
+                    <input type="text" name="costPerMonth" placeholder="costPerMonth" class="form-control">
+                </td>
+                <td>
+                    <input type="text" name="adress" placeholder="adress" class="form-control">
+                </td>
+
+                <td>
+                    <button type="submit"  class="btn btn-sm btn-success"><i class="fa fa-plus-square"
+                                                                                               aria-hidden="true"></i>
+                        Add
+                    </button>
+
+                </td>
+            </form>
+        </tr>-->
+
+        <!--   end tr for add-->
+
+
+        <tr th:each="office:${offices}">
+
+            <td th:text="${office.name}"></td>
             <td>TBD</td>
-            <td th:text="${office.noOfDesks}"> </td>
+            <td th:text="${office.noOfDesks}"></td>
             <td>TBD</td>
             <td>
                 <a th:href="@{'https://maps.google.com/?q=term' + ${office.adress}}" th:text="${office.adress}">
                 </a>
             </td>
-            <td>TBD</td>
-            <td>TBD</td>
+            <td>
+
+                <form action="/offices/update" method="get">
+                    <input type="hidden" th:value="${office.id}" name="officeid">
+                    <button class="btn btn-sm " type="submit">
+                        <i class="fa fa-trash" aria-hidden="true"></i> Update
+                    </button>
+                </form>
+
+
+            </td>
+            <td>
+                <form action="/offices/delete" method="get">
+                    <input type="hidden" th:value="${office.id}" name="officeid">
+                    <button class="btn btn-sm btn-warning" type="submit">
+                        <i class="fa fa-trash" aria-hidden="true"></i> Delete
+                    </button>
+                </form>
+
+            </td>
         </tr>
         </tbody>
         <tfoot>
@@ -89,3 +164,35 @@
 
 </body>
 </html>
+
+<!--
+
+<tr>
+    <form th:action="@{/offices/add}" th:object="${office}" method="post" action="/offices/add">
+
+        <td>
+            <input type="text" name="name" placeholder="office name" class="form-control">
+        </td>
+
+        <td>
+            <input type="text" name="noOfDesks" placeholder="noOfDesks" class="form-control">
+        </td>
+
+        <td>
+            <input type="text" name="costPerMonth" placeholder="costPerMonth" class="form-control">
+        </td>
+        <td>
+            <input type="text" name="adress" placeholder="adress" class="form-control">
+        </td>
+
+        <td>
+            <button type="submit" th:if="!${update}" class="btn btn-sm btn-success"><i class="fa fa-plus-square"
+                                                                                       aria-hidden="true"></i>
+                Add
+            </button>
+            <button type="submit" th:if="${update}" class="btn btn-primary"><i class="fa fa-plus-square"
+                                                                               aria-hidden="true"></i> Update
+            </button>
+        </td>
+    </form>
+</tr>-->

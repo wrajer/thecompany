@@ -19,10 +19,12 @@ public class EmployeeDto {
 
 
    // private Long id;
-   private String name;
+     private String name;
     private String surname;
+     private String password;
     private String email;
     private String login;
+    private String access;
     private String position;
     private Integer superiorId;
     private Float salary;

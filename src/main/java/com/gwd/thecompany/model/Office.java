@@ -1,5 +1,6 @@
 package com.gwd.thecompany.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,9 +10,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor //konstruktory dwa tworzone przez Lombok
+@NoArgsConstructor
 @AllArgsConstructor
-@Data //załatwia nam gett sett to String  hashcode quels
+@Data
 @Builder
 @Entity
 @Table(name = "offices")
@@ -34,6 +35,7 @@ public class Office {
     private Float costPerMonth;
 
     //todo sprawdz czy to jest dobre połączneie, czy jak uunę jedno to zostaje drugi etylko z NULL
+    @JsonIgnore
     @OneToMany(mappedBy = "office", cascade = CascadeType.ALL)
     //tu test bo jest to nawiązanie, nazwa klucza obcego po drugiej stronie
     private List<Employee> employeesList = new ArrayList<>();

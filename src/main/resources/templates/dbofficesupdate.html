@@ -58,19 +58,15 @@
         <tbody>
 
 
-        <tr th:each="emp:${dbemployees}">
+        <tr>
 
-            <td th:text="${emp.name}"> </td>
+            <td th:text="${office.name}"></td>
             <td>TBD</td>
-            <td th:text="${emp.surname}"> </td>
-            <td>TBD</td>
-            <td>
-                <a th:href="@{'https://maps.google.com/?q=term' + ${emp.adress}}" th:text="${emp.adress}">
-                </a>
-            </td>
-            <td>TBD</td>
-            <td>TBD</td>
+            <td th:text="${office.noOfDesks}"></td>
+
         </tr>
+
+
         </tbody>
         <tfoot>
         <tr>

@@ -19,21 +19,21 @@ public class EmployeeMapper implements Mapper<Employee, EmployeeDto> {
     @Override
     public EmployeeDto map(Employee f) {
 
-
         List<String> tasks = f
                 .getTasks()
                 .stream()
                 .map(TastToStringList.INSTANCE)
                 .collect(Collectors.toList());
 
-
         return EmployeeDto
                 .builder()
                 .adress(f.getAdress())
                 .email(f.getEmail())
                 .name(f.getName())
+                .password(f.getPassword())
                 .login(f.getLogin())
                 .office(f.getOffice())
+                .access(f.getAccess())
                 .position(f.getPosition())
                 .salary(f.getSalary())
                 .superiorId(f.getSuperiorId())

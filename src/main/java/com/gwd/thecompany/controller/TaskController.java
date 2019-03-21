@@ -1,20 +1,23 @@
 package com.gwd.thecompany.controller;
 
 import com.gwd.thecompany.model.Dto.TaskDto;
+import com.gwd.thecompany.model.Office;
 import com.gwd.thecompany.model.Task;
 import com.gwd.thecompany.repository.TaskRepository;
 import com.gwd.thecompany.service.TaskService;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
-@RestController //przez to Spring w returnie bedzie nam zwracała JSON, w całym kontrollerze produkujemy tylko JSONy
 @CrossOrigin //ustawienie że zerwer b nie puściłby nas przez połączneie, to zmienjszenie ograniczenia bezpieczenstwa
-@RequestMapping("/api/v1") //nasz główny link posredni ktory trzeba dodać na poczatku
+@Scope(value = "session")
+@Controller
 public class TaskController {
 
-    //pnie trzeba ponoac dawać Autowired tutaj
     private TaskService taskService;
     private TaskRepository taskRepository;
 
@@ -24,60 +27,41 @@ public class TaskController {
     }
 
     @GetMapping("/tasks")
-    public List<Task> getTasks() {
+    public String getTasks(ModelMap modelMap) {
 
-        return  taskRepository.findAll();
-       // return  taskService.getTasks();
-    }
-
-    @GetMapping("/dto/tasks")
-    public List<Task> getTasksDto() {
-
-
-        return  taskService.getTasks();
+        modelMap.put("tasks", taskService.getTasks());
+        return "dbtasks";
     }
 
 
+    @PostMapping("/tasks/add")
+    public String addTask(@ModelAttribute Task task) {
 
-// poniżej pełen CRUD czyli kązdy element
-//    @GetMapping("/dto/planets")
-//    public List<PlanetDto> getPlanetsDto() {
-//
-//        return planetService.getPlanetsDto();
-//    }
-//
-//    @GetMapping("/dto/planets/{planetDistance}")
-//    public List<PlanetDto> getPlanetsByDistance(@PathVariable Long planetDistance) {
-//
-//        return planetService.getPlanetsByDistanceFromSun(planetDistance);
-//
-//    }
+        taskService.addTask(task);
 
-    //jeden get zaminst dwóch powyżej
-//    @GetMapping("/dto/tasks")
-//    public List<TaskDto> getTasksDto() {
-//
-//        return taskService.getTasksDto();
-//    }
+        return "redirect:/tasks";
+    }
 
 
-//    @PostMapping("/dto/planets") //to posiada Ciało a get nie posiada ciała tylko zapytanie, POST może cs wykonać, ponoć dużo więcej
-//    public Planet addPlane(@RequestBody PlanetDto planetDto) //@RB bedzie oczekiwał takiego info jak Planet DTO
-//    {
-//        return planetService.addPlanet(planetDto);
-//    }
-//
-//    @PutMapping("/dto/planets") //prajtycznie nic sie nie różnią, ylko że pyta aktualizuje
-//    public void updatePlanet(@RequestBody PlanetDto planetDto) {
-//        planetService.updatePlanet(planetDto);
-//    }
-//
-//    @DeleteMapping("/dto/planets/{planetName}")
-//    public void deletePlanet(@PathVariable String planetName) { //musi być ta sama nazwa, jeśli ma nazzywac sie inaczej to jeszcze napisac inne rzeczy
-//        planetService.deletePlanet(planetName);
-//    }
+    @GetMapping("/tasks/update")
+    public String updateTask(@RequestParam Long taskid, ModelMap modelMap) {
+        //  System.out.println(officeService.getNoOfPeople(officeid));
+
+        //modelMap.put("tasks", taskService.updateTask(task);)
+        modelMap.put("update", "update");
+
+        return "dboffices";
+
+    }
 
 
+    @GetMapping("/tasks/delete")
+    public String deleteTask(@RequestParam Long taskid) {
+
+        taskService.deleteTaskById(taskid);
+
+        return "redirect:/offices";
+    }
 
 
 }

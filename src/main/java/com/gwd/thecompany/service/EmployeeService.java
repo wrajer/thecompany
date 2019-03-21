@@ -26,11 +26,25 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployees() {
+
         return employeeRepository.findAll();
     }
 
+    public Employee addEmployee(Employee employee) {
+        return employeeRepository.save(employee);
+    }
 
-    public List<EmployeeDto> getOfficessDto() {
+    public void deleteEmployee(Employee employee) {
+        employeeRepository.delete(employee);
+    }
+
+    public void updateEmployee (Employee employee) {
+
+        employeeRepository.save(employee);
+    }
+
+
+    public List<EmployeeDto> getEmployeeDto() {
 
         return employeeRepository
                 .findAll()
@@ -39,9 +53,9 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
-    public Employee addEmployee(EmployeeDto employeeDto) {
-        return employeeRepository.save(employeeMapper.revers(employeeDto));
-    }
+//    public Employee addEmployee(EmployeeDto employeeDto) {
+//        return employeeRepository.save(employeeMapper.revers(employeeDto));
+//    }
 
     public void updateEmployee(EmployeeDto officeDto) {
 //todo dopisać dunkcje update i delete

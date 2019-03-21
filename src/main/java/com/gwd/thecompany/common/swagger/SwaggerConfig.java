@@ -20,7 +20,7 @@ public class SwaggerConfig {
 
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.gwd.thecompany.controller")) //daje dostęp do szystkich kontrollerów, ale mozemy napisac tylko odpowiednie odrazy w path Regex
+                .apis(RequestHandlerSelectors.basePackage("com.gwd.thecompany.controller.restcontrollers")) //daje dostęp do szystkich kontrollerów, ale mozemy napisac tylko odpowiednie odrazy w path Regex
                 .paths(regex("/.*"))
                 .build();
     }

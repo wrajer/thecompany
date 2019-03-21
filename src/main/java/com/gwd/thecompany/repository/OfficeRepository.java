@@ -21,8 +21,11 @@ public interface OfficeRepository extends JpaRepository<Office, Long> {
     @Query(value = "Select o from Office o where o.name = ?1") // zapis JPQL
     Optional<Office> findByOfficeName(String officeName);
 
+
     @Query(value = "delete from Office o where o.name = ?1") // zapis JPQL
     @Transactional //potrzebne aby dziłac tranzakcjami
     @Modifying
     void deleteByOfficeName(String officeName);
+
+
 }

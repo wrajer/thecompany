@@ -11,7 +11,7 @@ import java.util.List;
 public class OfficeDto {
 
 
-  //  private Long id; pozostałe elementy jak w Office
+  //private Long id; pozostałe elementy jak w Office
     private String name;
     private Integer noOfDesks;
     private String adress;

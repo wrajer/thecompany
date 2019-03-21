@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 @Component
 public class OfficeMapper implements Mapper<Office, OfficeDto> {
 
-
     @Override
     public OfficeDto map(Office f) {
 
@@ -22,7 +21,6 @@ public class OfficeMapper implements Mapper<Office, OfficeDto> {
                 .stream()
                 .map(EmpsToStringList.INSTANCE)
                 .collect(Collectors.toList());
-
 
         return OfficeDto
                 .builder()

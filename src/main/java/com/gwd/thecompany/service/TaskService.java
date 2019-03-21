@@ -39,8 +39,19 @@ public class TaskService {
                 .collect(Collectors.toList());
     }
 
-    public Task addTask(TaskDto taskDto) {
+    public Task addTask(Task task) {
+        return taskRepository.save(task);
+    }
+ /*   public Task addTask(TaskDto taskDto) {
         return taskRepository.save(taskMapper.revers(taskDto));
+    }*/
+
+    public void deleteTaskById(Long taskid) {
+        taskRepository.deleteById(taskid);
+    }
+
+    public void updateTsk(Task task) {
+        taskRepository.save(task);
     }
 
     //tasks
