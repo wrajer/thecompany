@@ -46,7 +46,7 @@ public class Employee {
     private String access;
     @Column(name = "emp_sup_id")
     private Integer superiorId;
-
+    //todo make it a other Employee
     @Column(name = "emp_salary")
     private Float salary;
 

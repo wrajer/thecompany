@@ -11,6 +11,7 @@ import com.gwd.thecompany.repository.OfficeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +31,13 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
+    public Employee getEmployeeById(Long employeeId) {
+
+        Optional<Employee> employee = employeeRepository.findById(employeeId);
+
+        return employee.get();
+    }
+
     public Employee addEmployee(Employee employee) {
         return employeeRepository.save(employee);
     }
@@ -38,7 +46,11 @@ public class EmployeeService {
         employeeRepository.delete(employee);
     }
 
-    public void updateEmployee (Employee employee) {
+    public void deleteEmployeeById(Long empid) {
+        employeeRepository.deleteById(empid);
+    }
+
+    public void updateEmployee(Employee employee) {
 
         employeeRepository.save(employee);
     }
@@ -52,6 +64,7 @@ public class EmployeeService {
                 .map(employeeMapper::map)
                 .collect(Collectors.toList());
     }
+
 
 //    public Employee addEmployee(EmployeeDto employeeDto) {
 //        return employeeRepository.save(employeeMapper.revers(employeeDto));

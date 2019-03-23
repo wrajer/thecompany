@@ -1,23 +1,25 @@
 package com.gwd.thecompany.controller;
 
+import com.gwd.thecompany.common.CreatorXLS;
 import com.gwd.thecompany.model.Employee;
+import com.gwd.thecompany.model.Office;
 import com.gwd.thecompany.model.Task;
 import com.gwd.thecompany.repository.EmployeeRepository;
-import com.gwd.thecompany.repository.TaskRepository;
 import com.gwd.thecompany.service.EmployeeService;
-import com.gwd.thecompany.service.TaskService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 
 //@CrossOrigin //ustawienie że zerwer b nie puściłby nas przez połączneie, to zmienjszenie ograniczenia bezpieczenstwa
 
 //wyrzucone pre authrise
-@Scope(value = "session")
+@Scope(value = "session") //todo test funcion without it
+@RequestMapping("/employees")
 @Controller
 public class EmployeeController {
 
@@ -29,55 +31,55 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("/employess")
+    @GetMapping("")
     public String getEmployees(ModelMap modelMap) {
 
         modelMap.put("emplist", employeeRepository.findAll());
 
-        return "dbemp";
+        return "dbemployees";
     }
 
+/*    @GetMapping("/update")
+    public String updateEmployee(@RequestParam Long empid, ModelMap modelMap) {
 
+        modelMap.put("emptoupdate", employeeService.getEmployeeById(empid));
 
-/*
-   @ResponseBody
-    @GetMapping("/tasksjson")
-    public List<Task> getTasksjson(ModelMap modelMap) {
+        return "dboffices";
+    }*/
 
-        modelMap.put("tasks", taskService.getTasks());
+    @GetMapping("add")
+    public String addEmployee() {
 
-        return taskService.getTasks();
+        return "employeedetails";
     }
 
+/*    @PostMapping("/offices/add")
+    public String addOffice(@ModelAttribute Office office) { //nie działa na zwykłym office ehh
 
-    @PostMapping("/tasks/add")
-    public String addTask(@ModelAttribute Task taskadd) {
+        officeService.addOffice(office);
 
-        taskService.addTask(taskadd);
+        return "redirect:/offices";
+    }*/
 
-        return "redirect:/tasks";
+
+    @GetMapping("/delete")
+    public String deleteEmployee(@RequestParam Long empid) {
+
+        employeeService.deleteEmployeeById(empid);
+
+        return "redirect:/employees";
     }
 
+    @GetMapping("/excel")
+    public String createFile() throws NoSuchMethodException,
+            IOException, IllegalAccessException, InvocationTargetException {
 
-    @GetMapping("/tasks/update")
-    public String updateTask(@RequestParam Long taskid, ModelMap modelMap) {
-        //  System.out.println(officeService.getNoOfPeople(officeid));
+        CreatorXLS<Employee> creatorXLS = new CreatorXLS<>(Employee.class);
+        creatorXLS.createFile(employeeService.getEmployees(), "src/main/resources", "EmployeesList");
 
-        //modelMap.put("tasks", taskService.updateTask(task);)
-        modelMap.put("update", "update");
+        return "redirect:/employees";
+    }
 
-        return "tasks";*/
-
-   // }
-
-//
-//    @GetMapping("/tasks/delete")
-//    public String deleteTask(@RequestParam Long taskid) {
-//
-//        taskService.deleteTaskById(taskid);
-//
-//        return "redirect:/tasks";
-//    }
 
 
 }
