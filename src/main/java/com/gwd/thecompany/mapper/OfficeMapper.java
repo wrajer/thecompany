@@ -4,6 +4,9 @@ import com.gwd.thecompany.common.Mapper;
 import com.gwd.thecompany.model.Dto.OfficeDto;
 import com.gwd.thecompany.model.Employee;
 import com.gwd.thecompany.model.Office;
+import com.gwd.thecompany.repository.OfficeRepository;
+import com.gwd.thecompany.service.OfficeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,22 +16,31 @@ import java.util.stream.Collectors;
 @Component
 public class OfficeMapper implements Mapper<Office, OfficeDto> {
 
+    @Autowired
+    OfficeRepository officeRepository;
+
+    @Autowired
+    OfficeService officeService;
+
     @Override
     public OfficeDto map(Office f) {
 
-        List<String> emps = f
+    /*    List<String> emps = f
                 .getEmployeesList()
                 .stream()
                 .map(EmpsToStringList.INSTANCE)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
 
         return OfficeDto
                 .builder()
+                .id(f.getId())
                 .adress(f.getAdress())
                 .costPerMonth(f.getCostPerMonth())
                 .name(f.getName())
                 .noOfDesks(f.getNoOfDesks())
-                .employeesList(emps)
+                .employeesList(f.getEmployeesList())
+               /* .employeesList(emps)*/
+                .noPeople(officeService.getNoOfPeopleById(f.getId()))
                 .build();
     }
 

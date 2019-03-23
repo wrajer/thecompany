@@ -17,15 +17,19 @@ import java.util.List;
 public class TaskDto {
 
 
-  // private Long id;
-  private String name;
-  private String description;
-  private String priority;
+    // private Long id;
+    private String name;
+    private String description;
+    private String priority;
 
-  private List<String> taskEmpList = new ArrayList<>();
+    private List<String> taskEmpList = new ArrayList<>();
 
-  private Date start_at = new Date();
-  private Date end_at = new Date();
+
+    private String start_at;
+    private String end_at;
+
+/*  private Date start_at = new Date();
+  private Date end_at = new Date();*/
 
 }
 

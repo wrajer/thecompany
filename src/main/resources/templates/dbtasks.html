@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/head :: head"></head>
+<body>
+
+<head th:replace="fragments/nav :: nav"></head>
+
+<div>Test teks
+    <br>
+    <br>
+</div>
+<div class="container" style="width:95%">
+    <table id="example" class="table table-striped table-bordered nowrap " style="width:100%">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Priority</th>
+            <th>Start at</th>
+            <th>End at</th>
+            <th>Update</th>
+            <th>Delete</th>
+            <th>Add Emp</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <!--     tr for update
+
+         <tr th:if="${update}">
+
+              <form th:action="@{/offices/update/send}" th:object="${officesend}" method="GET" >
+             <form th:action="@{/offices/add}" th:object="${office}" method="Post" action="/offices/add">
+
+                 <td>
+                     <input type="hidden" name="id" th:field="${officetoupdate.id}">
+                     <input type="text" name="name" th:value="${officetoupdate.name}" class="form-control">
+                 </td>
+
+
+                 <td>
+                     <button type="submit" th:if="${update}" class="btn btn-primary"><i class="fa fa-plus-square"
+                                                                                        aria-hidden="true"></i> Update
+                     </button>
+                 </td>
+
+             </form>
+         </tr>
+
+             end tr for update-->
+
+        <tr th:if="!${update}">
+            <form th:action="@{/tasks/add}" th:object="${taskadd}" method="Post" action="/tasks/add">
+                <td>
+                    <input type="text" placeholder="auto increase" class="form-control" disabled>
+                </td>
+                <td>
+                    <input type="text" name="name" placeholder="Task name" class="form-control">
+                </td>
+                <td>
+                    <input type="text" name="description" placeholder="Description" class="form-control">
+                </td>
+                <td>
+                    <!--   <input type="text"  placeholder="Priority" class="form-control">-->
+                    <select name="priority" class="form-control">
+                        <option value="HIGH" style="color:#FF0000">HIGH</option>
+                        <option value="NORMAL" style="color:#FFD700">NORMAL</option>
+                        <option value="LOW" style="color:#32CD32">LOW</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="date" name="start_at" placeholder="YYYY-MM-DD" class="form-control">
+                </td>
+                <td>
+                    <input type="date" name="end_at" placeholder="YYYY-MM-DD" class="form-control">
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus-square"
+                                                                            aria-hidden="true"></i>
+                        Add
+                    </button>
+                </td>
+            </form>
+        </tr>
+        <!--TABLE WITH DATA OFFICES-->
+        <tr th:each="t:${tasklist}">
+            <td th:text="${t.id}"></td>
+            <td th:text="${t.name}"></td>
+            <td th:text="${t.description}">
+            <td th:text="${t.priority}"></td>
+            <td th:text="${t.Start_at}"></td>
+            <td th:text="${t.End_at}"></td>
+            <td>
+                <form action="/tasks/update" method="get">
+                    <!--  <input type="hidden" th:value="${office.id}" name="officeid">-->
+                    <button class="btn btn-sm " type="submit">
+                        <i class="fa fa-trash" aria-hidden="true"></i> Update
+                    </button>
+                </form>
+            </td>
+            <td>
+                <form action="/tasks/delete" method="get">
+                    <input type="hidden" th:value="${t.id}" name="taskid">
+                    <button class="btn btn-sm btn-warning" type="submit">
+                        <i class="fa fa-trash" aria-hidden="true"></i> Delete
+                    </button>
+                </form>
+            </td>
+            <td>
+                <form action="/tasks/addemp" method="get">
+                    <input type="hidden" th:value="${t.id}" name="taskeid" width="30px">
+                    <input type="text" name="empid" class="form-control">
+                    <button class="btn btn-sm btn-warning" type="submit">
+                        <i class="fa fa-trash" aria-hidden="true"></i> addEmp
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Priority</th>
+            <th>Start at</th>
+            <th>End at</th>
+            <th>Update</th>
+            <th>Delete</th>
+            <th>Add Emp</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
+<head th:replace="fragments/footer :: footer"></head>
+
+</body>
+</html>
+
+
+<!--
+
+linki z navbaru
+
+<link rel="icon" href="../../favicon.ico">
+<link rel="canonical" href="https://getbootstrap.com/docs/3.3/examples/navbar-fixed-top/">
+
+<title>Fixed Top Navbar Example for Bootstrap</title>
+
+&lt;!&ndash; Bootstrap core CSS &ndash;&gt;
+<link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+&lt;!&ndash; IE10 viewport hack for Surface/desktop Windows 8 bug &ndash;&gt;
+<link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+&lt;!&ndash; Custom styles for this template &ndash;&gt;
+<link href="navbar-fixed-top.css" rel="stylesheet">
+
+&lt;!&ndash; Just for debugging purposes. Don't actually copy these 2 lines! &ndash;&gt;
+&lt;!&ndash;[if lt IE 9]>
+<script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]&ndash;&gt;
+<script src="../../assets/js/ie-emulation-modes-warning.js"></script>-->

@@ -33,14 +33,21 @@ public class Task {
     private List<Employee> taskEmpList = new ArrayList<>();
 
     //   @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
+   /* @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "Start_at")
-    private Date start_at = new Date();
+    private Date start_at = new Date();*/
+//
+//    @Temporal(TemporalType.TIMESTAMP)
+//    @Column(name = "End_at")
+//    private Date end_at = new Date();
 
-    //  @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
+
+    @Column(name = "Start_at")
+    private String start_at;
+
+
     @Column(name = "End_at")
-    private Date end_at = new Date();
+    private String end_at ;
 
     @Override
     public boolean equals(Object o) {

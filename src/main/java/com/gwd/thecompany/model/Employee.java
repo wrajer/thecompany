@@ -21,7 +21,7 @@ import java.util.List;
 @Table(name = "employees")
 public class Employee {
 
-
+ // {noop} wymyślone hasło
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -89,7 +89,13 @@ public class Employee {
         this.tasks = tasks;
     }
 
+// added for security
 
-
+    public Employee(Employee employee) {
+        this.name=employee.getName();
+        this.login = employee.getLogin();
+        this.access = employee.getAccess();
+        this.password = employee.getPassword();
+    }
 
 }

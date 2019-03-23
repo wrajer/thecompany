@@ -26,7 +26,7 @@ public class Office {
     private String name;
 
     @Column(name = "office_no_of_desks")
-    private Integer noOfDesks;
+    private Long noOfDesks;
 
     @Column(name = "office_adress")
     private String adress;
@@ -44,5 +44,18 @@ public class Office {
     //todo make new Object Adress which can be use by office and person
     //todo add person responsible for this office, add Office
 
+public void addEmpToList (Employee employee) {
+    this.employeesList.add(employee);
+}
 
+
+
+/*    public Office(Long id, String name, Integer noOfDesks, String adress, Float costPerMonth, List<Employee> employeesList) {
+        this.id = id;
+        this.name = name;
+        this.noOfDesks = noOfDesks;
+        this.adress = adress;
+        this.costPerMonth = costPerMonth/noOfDesks;
+        this.employeesList = employeesList;
+    }*/
 }

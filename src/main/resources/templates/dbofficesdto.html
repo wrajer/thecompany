@@ -51,7 +51,6 @@
             <th>No of desks</th>
             <th>Cost per desk/month</th>
             <th>Adress</th>
-            <th>Photo</th>
             <th>Update</th>
             <th>Delete</th>
         </tr>
@@ -59,24 +58,37 @@
         <tbody>
 
 
-        <tr th:each="emp:${emplist}">
 
-            <td th:text="${emp.name}"> </td>
-            <td>TBD</td>
-            <td th:text="${emp.surname}"> </td>
-            <td>TBD</td>
+        <tr th:each="office:${offices}">
+
+            <td th:text="${office.name}"></td>
+            <td>0</td>
+            <td th:text="${office.noOfDesks}"></td>
+            <td th:text="${office.costPerMonth}"></td>
             <td>
-                <a th:href="@{'https://maps.google.com/?q=term' + ${emp.adress}}" th:text="${emp.adress}">
+                <a th:href="@{'https://maps.google.com/?q=term' + ${office.adress}}" th:text="${office.adress}" target="_blank">
                 </a>
             </td>
             <td>
 
-                <img th:src="@{'/avatars/' + ${emp.id%10} + '.png'}" alt="avatar"  width="50" />
+                <form action="/offices/update" method="get">
+                    <input type="hidden" th:value="${office.id}" name="officeid">
+                    <button class="btn btn-sm " type="submit">
+                        <i class="fa fa-trash" aria-hidden="true"></i> Update
+                    </button>
+                </form>
 
 
             </td>
-            <td>TBD</td>
-            <td>TBD</td>
+            <td>
+                <form action="/offices/delete" method="get">
+                   <!-- <input type="hidden" th:value="${office.id}" name="officeid">-->
+                    <button class="btn btn-sm btn-warning" type="submit">
+                        <i class="fa fa-trash" aria-hidden="true"></i> Delete
+                    </button>
+                </form>
+
+            </td>
         </tr>
         </tbody>
         <tfoot>
@@ -96,3 +108,35 @@
 
 </body>
 </html>
+
+<!--
+
+<tr>
+    <form th:action="@{/offices/add}" th:object="${office}" method="post" action="/offices/add">
+
+        <td>
+            <input type="text" name="name" placeholder="office name" class="form-control">
+        </td>
+
+        <td>
+            <input type="text" name="noOfDesks" placeholder="noOfDesks" class="form-control">
+        </td>
+
+        <td>
+            <input type="text" name="costPerMonth" placeholder="costPerMonth" class="form-control">
+        </td>
+        <td>
+            <input type="text" name="adress" placeholder="adress" class="form-control">
+        </td>
+
+        <td>
+            <button type="submit" th:if="!${update}" class="btn btn-sm btn-success"><i class="fa fa-plus-square"
+                                                                                       aria-hidden="true"></i>
+                Add
+            </button>
+            <button type="submit" th:if="${update}" class="btn btn-primary"><i class="fa fa-plus-square"
+                                                                               aria-hidden="true"></i> Update
+            </button>
+        </td>
+    </form>
+</tr>-->

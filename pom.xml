@@ -79,6 +79,27 @@
             <version>2.6.1</version>
             <scope>compile</scope>
         </dependency>
+        <!-- END SWAGGER 2-->
+
+        <!--SECURITY-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!--END SECURITY-->
+
+        <!--XLMS-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.17</version>
+        </dependency>
 
     </dependencies>
 

@@ -10,14 +10,14 @@ import java.util.List;
 @Builder
 public class OfficeDto {
 
-
-  //private Long id; pozostałe elementy jak w Office
+    private Long id;
     private String name;
-    private Integer noOfDesks;
+    private Long noOfDesks;
+    private Long noPeople;
     private String adress;
     private Float costPerMonth;
 
-    private List<String> employeesList = new ArrayList<>();
-
+    private List<Employee> employeesList = new ArrayList<>();
+/*    private List<String> employeesList = new ArrayList<>();*/
 
 }

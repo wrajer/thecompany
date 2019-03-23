@@ -2,14 +2,11 @@ package com.gwd.thecompany.service;
 
 import com.gwd.thecompany.mapper.OfficeMapper;
 import com.gwd.thecompany.model.Dto.OfficeDto;
-import com.gwd.thecompany.model.Employee;
 import com.gwd.thecompany.model.Office;
 import com.gwd.thecompany.repository.EmployeeRepository;
 import com.gwd.thecompany.repository.OfficeRepository;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,21 +28,23 @@ public class OfficeService {
         return officeRepository.findAll();
     }
 
+
+    public List<OfficeDto> getOfficesDto() {
+
+        return officeRepository
+                .findAll()
+                .stream()
+                .map(officeMapper::map)
+                .collect(Collectors.toList());
+    }
+
+
     public Office getOfficeById(Long officeId) {
 
         Optional<Office> office = officeRepository.findById(officeId);
 
         return office.get();
     }
-
-
-/*    public Office getOfficeById2(Long officeId) {
-
-        Optional<Office> office = officeRepository.findById(officeId);
-
-        return office.get();
-    }*/
-
 
     public Office addOffice(Office office) {
         return officeRepository.save(office);
@@ -63,11 +62,10 @@ public class OfficeService {
         officeRepository.deleteById(officeid);
     }
 
-    public Long getNoOfPeople(Long officeId) {
 
-        Optional<Office> office = officeRepository.findById(officeId);
+    public Long getNoOfPeopleById(Long officeId) {
 
-        return employeeRepository.getNoOfPeoleInOneOffice(office);
+        return employeeRepository.getNoOfPeoleInOneOfficeById(officeId);
     }
 
 

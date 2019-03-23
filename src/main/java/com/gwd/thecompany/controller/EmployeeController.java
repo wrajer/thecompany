@@ -1,51 +1,45 @@
 package com.gwd.thecompany.controller;
 
-import com.gwd.thecompany.common.CreatorXLS;
+import com.gwd.thecompany.model.Employee;
 import com.gwd.thecompany.model.Task;
+import com.gwd.thecompany.repository.EmployeeRepository;
 import com.gwd.thecompany.repository.TaskRepository;
+import com.gwd.thecompany.service.EmployeeService;
 import com.gwd.thecompany.service.TaskService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 
 //@CrossOrigin //ustawienie że zerwer b nie puściłby nas przez połączneie, to zmienjszenie ograniczenia bezpieczenstwa
+
+//wyrzucone pre authrise
 @Scope(value = "session")
 @Controller
-public class TaskController {
+public class EmployeeController {
 
-    private TaskService taskService;
-    private TaskRepository taskRepository;
+  private EmployeeRepository employeeRepository;
+  private EmployeeService employeeService;
 
-    public TaskController(TaskService taskService, TaskRepository taskRepository) {
-        this.taskService = taskService;
-        this.taskRepository = taskRepository;
+    public EmployeeController(EmployeeRepository employeeRepository, EmployeeService employeeService) {
+        this.employeeRepository = employeeRepository;
+        this.employeeService = employeeService;
+    }
+
+    @GetMapping("/employess")
+    public String getEmployees(ModelMap modelMap) {
+
+        modelMap.put("emplist", employeeRepository.findAll());
+
+        return "dbemp";
     }
 
 
-    @GetMapping("/tasks")
-    public String getTasks(ModelMap modelMap) {
 
-        modelMap.put("tasklist", taskService.getTasks());
-
-        return "dbtasks";
-    }
-
-
-/*    Get Excel     */
-    @GetMapping("/tasks/excel")
-    public String createFile() throws NoSuchMethodException,
-            IOException, IllegalAccessException, InvocationTargetException {
-        CreatorXLS<Task> creatorXLS = new CreatorXLS<>(Task.class);
-        creatorXLS.createFile(taskService.getTasks(), "src/main/resources", "taskList");
-        return "redirect:/tasks";
-    }
-
+/*
    @ResponseBody
     @GetMapping("/tasksjson")
     public List<Task> getTasksjson(ModelMap modelMap) {
@@ -72,18 +66,18 @@ public class TaskController {
         //modelMap.put("tasks", taskService.updateTask(task);)
         modelMap.put("update", "update");
 
-        return "tasks";
+        return "tasks";*/
 
-    }
+   // }
 
-
-    @GetMapping("/tasks/delete")
-    public String deleteTask(@RequestParam Long taskid) {
-
-        taskService.deleteTaskById(taskid);
-
-        return "redirect:/tasks";
-    }
+//
+//    @GetMapping("/tasks/delete")
+//    public String deleteTask(@RequestParam Long taskid) {
+//
+//        taskService.deleteTaskById(taskid);
+//
+//        return "redirect:/tasks";
+//    }
 
 
 }

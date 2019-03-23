@@ -12,11 +12,6 @@ import java.util.Optional;
 public interface OfficeRepository extends JpaRepository<Office, Long> {
 
 
-//    @Query(value = "delete from Planet p where p.planetName = ?1") // zapis JPQL
-//    @Transactional //potrzebne aby dziłac tranzakcjami
-//    @Modifying
-//    void deleteByTaskTitle(String TaskTitle);
-
 //for updates
     @Query(value = "Select o from Office o where o.name = ?1") // zapis JPQL
     Optional<Office> findByOfficeName(String officeName);
