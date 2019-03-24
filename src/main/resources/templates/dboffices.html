@@ -69,8 +69,8 @@
         <tr>
             <th>Name</th>
             <th>Employees</th>
-            <th>Desks available</th>
-            <th>Cost per desk/month</th>
+            <th>Desks</th>
+            <th>Cost/month</th>
             <th>Adress</th>
             <th>Add Emp[id]</th>
             <th>Update</th>
@@ -82,7 +82,7 @@
             <td th:text="${office.name}"></td>
             <td>
                 <li th:each="emp:${office.employeesList}">
-                    <a th:href="@{'https://maps.google.com/?q=' + ${office.adress}}">
+                    <a th:href="@{'/employees/details?empid='+${emp.id}}">
                         <small th:text="${emp.name} + ' ' + ${emp.surname}"/>
                     </a>
                 </li>
@@ -126,8 +126,8 @@
         <tr>
             <th>Name</th>
             <th>Employees</th>
-            <th>Desks available</th>
-            <th>Cost per desk/month</th>
+            <th>Desks</th>
+            <th>Cost/month</th>
             <th>Adress</th>
             <th>Add Emp[id]</th>
             <th>Update</th>

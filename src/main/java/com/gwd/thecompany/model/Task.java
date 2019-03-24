@@ -54,11 +54,11 @@ public class Task {
         if (this == o) return true;
         if (!(o instanceof Task)) return false;
         Task task = (Task) o;
-        return getName().equals(task.getName()) &&
-                getDescription().equals(task.getDescription()) &&
-                getPriority().equals(task.getPriority()) &&
-                getStart_at().equals(task.getStart_at()) &&
-                getEnd_at().equals(task.getEnd_at());
+        return Objects.equals(getName(), task.getName()) &&
+                Objects.equals(getDescription(), task.getDescription()) &&
+                Objects.equals(getPriority(), task.getPriority()) &&
+                Objects.equals(getStart_at(), task.getStart_at()) &&
+                Objects.equals(getEnd_at(), task.getEnd_at());
     }
 
     @Override

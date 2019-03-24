@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 
 //@CrossOrigin //ustawienie że zerwer b nie puściłby nas przez połączneie, to zmienjszenie ograniczenia bezpieczenstwa
@@ -39,6 +40,15 @@ public class EmployeeController {
         return "dbemployees";
     }
 
+/*    @ResponseBody
+    @GetMapping("")
+    public List<Employee> getEmployees(ModelMap modelMap) {
+
+        modelMap.put("emplist", employeeRepository.findAll());
+
+        return employeeRepository.findAll();
+    }*/
+
 /*    @GetMapping("/update")
     public String updateEmployee(@RequestParam Long empid, ModelMap modelMap) {
 
@@ -53,13 +63,22 @@ public class EmployeeController {
         return "employeedetails";
     }
 
-/*    @PostMapping("/offices/add")
-    public String addOffice(@ModelAttribute Office office) { //nie działa na zwykłym office ehh
+    @GetMapping("details")
+    public String getEmployeeDetails(@RequestParam Long empid, ModelMap modelMap) {
 
-        officeService.addOffice(office);
+        modelMap.put("emp",  employeeService.getEmployeeById(empid));
 
-        return "redirect:/offices";
-    }*/
+        return "employeedetails";
+    }
+
+    @PostMapping("/add")
+    public String addEmployee(@ModelAttribute Employee employee) { //nie działa na zwykłym office ehh
+
+        employeeService.addEmployee(employee);
+
+        return "redirect:/employees";
+    }
+
 
 
     @GetMapping("/delete")

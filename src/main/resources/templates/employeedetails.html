@@ -8,10 +8,10 @@
     <title>The Company</title>
 
 
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
 
 </head>
 
@@ -36,8 +36,8 @@
     </div>
 </nav>
 
-<!-- SECTION TO ADD NEW AND UPDATE -->
-<div class="container" style="margin-top: 60px">
+<!-- SECTION SEE EXISTING EMPLOYEE -->
+<div class="container" style="margin-top: 60px" th:if="!${empoupdate}">
     <div class="well col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
         <div class="row user-infos cyruxx">
             <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">
@@ -48,49 +48,88 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-3 col-lg-3 hidden-xs hidden-sm">
-
-                                //image
-                                <img class="img-circle"
-                                     src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100"
-                                     alt="User Pic">
+                                <img th:src="@{'/avatars/' + ${emp.id%10} + '.png'}" alt="avatar" width="100"/>
                             </div>
-                            <div class="col-xs-2 col-sm-2 hidden-md hidden-lg">
-                                <img class="img-circle"
-                                     src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=50"
-                                     alt="User Pic">
-                            </div>
-                            <div class="col-xs-10 col-sm-10 hidden-md hidden-lg">
-                                <strong>Cyruxx</strong><br>
-                                <dl>
-                                    <dt>User level:</dt>
-                                    <dd>Administrator</dd>
-                                    <dt>Registered since:</dt>
-                                    <dd>11/12/2013</dd>
-                                    <dt>Topics</dt>
-                                    <dd>15</dd>
-                                    <dt>Warnings</dt>
-                                    <dd>0</dd>
-                                </dl>
-                            </div>
+                            <!--   Section for small screens-->
+                            <!--        <div class="col-xs-10 col-sm-10 hidden-md hidden-lg">
+                                        <strong>Cyruxx</strong><br>
+                                        <dl>
+                                            <dt>User level:</dt>
+                                            <dd>Administrator</dd>
+                                            <dt>Registered since:</dt>
+                                            <dd>11/12/2013</dd>
+                                            <dt>Topics</dt>
+                                            <dd>15</dd>
+                                            <dt>Warnings</dt>
+                                            <dd>0</dd>
+                                        </dl>
+                                    </div>-->
                             <div class=" col-md-9 col-lg-9 hidden-xs hidden-sm">
-                                <strong>Cyruxx</strong><br>
+                                <strong th:text="${emp.name} + ' ' + ${emp.surname}"/>
+                                <i th:text="${emp.position}"/>
+                                <br>
                                 <table class="table table-user-information">
                                     <tbody>
                                     <tr>
-                                        <td>User level:</td>
-                                        <td>Administrator</td>
+                                        <td>Id:</td>
+                                        <td th:text="${emp.id}"/>
                                     </tr>
                                     <tr>
-                                        <td>Registered since:</td>
-                                        <td>11/12/2013</td>
+                                        <td>E-mail:</td>
+                                        <td th:text="${emp.email}"/>
                                     </tr>
                                     <tr>
-                                        <td>Topics</td>
-                                        <td>15</td>
+                                        <td>Login:</td>
+                                        <td th:text="${emp.login}"/>
                                     </tr>
                                     <tr>
-                                        <td>Warnings</td>
-                                        <td>0</td>
+                                        <td>Password</td>
+                                        <td th:text="${emp.password}"/>
+                                    </tr>
+                                    <tr>
+                                        <td>Access lvl:</td>
+                                        <td th:text="${emp.access}"/>
+                                    </tr>
+                                    <tr>
+                                        <td>Salary:</td>
+                                        <td th:text="${emp.salary}"/>
+                                    </tr>
+                                    <tr>
+                                        <td>Hired from:</td>
+                                        <td th:text="${#strings.substring(emp.start_at,0,10)}"/>
+                                    </tr>
+                                    <tr>
+                                        <td>Superior id:</td>
+                                        <td th:text="${emp.superiorId}"/>
+                                    </tr>
+                                    <tr>
+                                        <td>Office:</td>
+                                        <td>
+                                            <i th:text="${emp.office.getName()}"/>
+                                            <a th:href="@{'https://maps.google.com/?q=' + ${emp.office.getName()}}"
+                                               target="_blank">
+                                                <p th:text=" ${emp.office.getAdress()}"/>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Personal address:</td>
+                                        <td>
+                                            <a th:href="@{'https://maps.google.com/?q=' + ${emp.adress}}"
+                                               target="_blank">
+                                                <p th:text="${emp.adress}"/>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tasks</td>
+                                        <td>
+                                            <li th:each="task:${emp.tasks}">
+                                                <a th:href="asdasd">
+                                                    <small th:text="${task.name}"/>
+                                                </a>
+                                            </li>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -100,14 +139,113 @@
                     <div class="panel-footer">
                         <button class="btn btn-sm btn-primary" type="button"
                                 data-toggle="tooltip"
-                                data-original-title="Send message to user"><i class="glyphicon glyphicon-envelope"></i></button>
+                                data-original-title="Send message to user"><i class="glyphicon glyphicon-envelope"></i>
+                        </button>
                         <span class="pull-right">
                             <button class="btn btn-sm btn-warning" type="button"
                                     data-toggle="tooltip"
-                                    data-original-title="Edit this user"><i class="glyphicon glyphicon-edit"></i></button>
+                                    data-original-title="Edit this user"><i
+                                    class="glyphicon glyphicon-edit"></i></button>
                             <button class="btn btn-sm btn-danger" type="button"
                                     data-toggle="tooltip"
-                                    data-original-title="Remove this user"><i class="glyphicon glyphicon-remove"></i></button>
+                                    data-original-title="Remove this user"><i
+                                    class="glyphicon glyphicon-remove"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END SECTION  -->
+
+<!-- SECTION TO ADD NEW AND UPDATE -->
+<div class="container" style="margin-top: 60px">
+    <div class="well col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+        <div class="row user-infos cyruxx">
+            <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">New Employee Details</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3 hidden-xs hidden-sm">
+                                <img th:src="@{'/avatars/' + ${emp.id%10} + '.png'}" alt="avatar" width="100"/>
+                            </div>
+                            <div class=" col-md-9 col-lg-9 hidden-xs hidden-sm">
+                                <table class="table table-user-information">
+                                    <tbody>
+                                    <form th:action="@{/employees/add}" th:object="${employee}" method="Post"
+                                          action="/employees/add">
+                                        <tr>
+                                            <td>Name:</td>
+                                            <td>
+                                                <input type="text" name="name" class="form-control">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Surname:</td>
+                                            <td>
+                                                <input type="text" name="surname" class="form-control">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Password</td>
+                                            <td>
+                                                <input type="text" name="password" class="form-control">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Access lvl:</td>
+                                            <td>
+                                                <input type="text" name="access" class="form-control">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Salary:</td>
+                                            <td>
+                                                <input type="number" min="0" name="salary" class="form-control">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Superior id:</td>
+                                            <td>
+                                                <input type="number" min="0" name="superiorid" class="form-control">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Personal address:</td>
+                                            <td>
+                                                <input type="text" name="adress" class="form-control">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <button type="submit" class="btn btn-sm btn-success">Save
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </form>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button class="btn btn-sm btn-primary" type="button"
+                                data-toggle="tooltip"
+                                data-original-title="Send message to user"><i class="glyphicon glyphicon-envelope"></i>
+                        </button>
+                        <span class="pull-right">
+                            <button class="btn btn-sm btn-warning" type="button"
+                                    data-toggle="tooltip"
+                                    data-original-title="Edit this user"><i
+                                    class="glyphicon glyphicon-edit"></i></button>
+                            <button class="btn btn-sm btn-danger" type="button"
+                                    data-toggle="tooltip"
+                                    data-original-title="Remove this user"><i
+                                    class="glyphicon glyphicon-remove"></i></button>
                         </span>
                     </div>
                 </div>

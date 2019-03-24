@@ -21,7 +21,7 @@ import java.util.List;
 @Table(name = "employees")
 public class Employee {
 
- // {noop} wymyślone hasło
+    // {noop} wymyślone hasło
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -53,7 +53,7 @@ public class Employee {
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "epm_hire_data")
-    private Date start_at= new Date();
+    private Date start_at = new Date();
 
     @ManyToOne
     private Office office;
@@ -62,10 +62,10 @@ public class Employee {
     private String adress;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable (
-            name="emp_task",//nazwa nowej tabeli
+    @JoinTable(
+            name = "emp_task",//nazwa nowej tabeli
             joinColumns = @JoinColumn(name = "emp_id"),
-            inverseJoinColumns = @JoinColumn(name="task_id"))
+            inverseJoinColumns = @JoinColumn(name = "task_id"))
     private List<Task> tasks = new ArrayList<>();
 
     //todo make new Object Adress which can be use by office and person
@@ -74,11 +74,11 @@ public class Employee {
 
     public Employee(Long id, String name, String surname, String password, String email, String login, String position, String access, Integer superiorId, Float salary, Date start_at, Office office, String adress, List<Task> tasks) {
         this.id = id;
-        this.name = name+"."+surname ; //todo spróbuj dodać ID jeśli będ
+        this.name = name + "." + surname;
         this.surname = surname;
         this.password = password;
-        this.email = this.login+"@the.com";
-        this.login = login;
+        this.login = name + surname;
+        this.email = this.login + "@the.com";
         this.position = position;
         this.access = access;
         this.superiorId = superiorId;
@@ -89,10 +89,37 @@ public class Employee {
         this.tasks = tasks;
     }
 
+    public Employee(String name, String surname, String password, String position, String access, Integer superiorId, Float salary, String adress) {
+
+        this.name = name + "." + surname;
+        this.surname = surname;
+        this.password = password;
+        this.login = name + surname;
+        this.email = this.login + "@the.com";
+        this.position = position;
+        this.access = access;
+        this.superiorId = superiorId;
+        this.salary = salary;
+        this.adress = adress;
+    }
+
+    public Employee(String name, String surname, String password, String access, Integer superiorId, Float salary, String adress) {
+
+        this.name = name + "." + surname;
+        this.surname = surname;
+        this.password = password;
+        this.login = name + surname;
+        this.email = this.login + "@the.com";
+        this.access = access;
+        this.superiorId = superiorId;
+        this.salary = salary;
+        this.adress = adress;
+    }
+
 // added for security
 
     public Employee(Employee employee) {
-        this.name=employee.getName();
+        this.name = employee.getName();
         this.login = employee.getLogin();
         this.access = employee.getAccess();
         this.password = employee.getPassword();
