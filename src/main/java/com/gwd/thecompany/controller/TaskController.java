@@ -1,7 +1,9 @@
 package com.gwd.thecompany.controller;
 
 import com.gwd.thecompany.common.CreatorXLS;
+import com.gwd.thecompany.model.Employee;
 import com.gwd.thecompany.model.Task;
+import com.gwd.thecompany.repository.EmployeeRepository;
 import com.gwd.thecompany.repository.TaskRepository;
 import com.gwd.thecompany.service.TaskService;
 import org.springframework.context.annotation.Scope;
@@ -12,23 +14,26 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Optional;
 
 
 //@CrossOrigin //ustawienie że zerwer b nie puściłby nas przez połączneie, to zmienjszenie ograniczenia bezpieczenstwa
 @Scope(value = "session")
+@RequestMapping("/tasks")
 @Controller
 public class TaskController {
 
     private TaskService taskService;
     private TaskRepository taskRepository;
+    private EmployeeRepository employeeRepository;
 
-    public TaskController(TaskService taskService, TaskRepository taskRepository) {
+    public TaskController(TaskService taskService, TaskRepository taskRepository, EmployeeRepository employeeRepository) {
         this.taskService = taskService;
         this.taskRepository = taskRepository;
+        this.employeeRepository = employeeRepository;
     }
 
-
-    @GetMapping("/tasks")
+    @GetMapping("")
     public String getTasks(ModelMap modelMap) {
 
         modelMap.put("tasklist", taskService.getTasks());
@@ -37,8 +42,8 @@ public class TaskController {
     }
 
 
-/*    Get Excel     */
-    @GetMapping("/tasks/excel")
+    /*    Get Excel     */
+    @GetMapping("/excel")
     public String createFile() throws NoSuchMethodException,
             IOException, IllegalAccessException, InvocationTargetException {
         CreatorXLS<Task> creatorXLS = new CreatorXLS<>(Task.class);
@@ -46,8 +51,8 @@ public class TaskController {
         return "redirect:/tasks";
     }
 
-   @ResponseBody
-    @GetMapping("/tasksjson")
+    @ResponseBody
+    @GetMapping("/json")
     public List<Task> getTasksjson(ModelMap modelMap) {
 
         modelMap.put("tasks", taskService.getTasks());
@@ -56,7 +61,7 @@ public class TaskController {
     }
 
 
-    @PostMapping("/tasks/add")
+    @PostMapping("/add")
     public String addTask(@ModelAttribute Task taskadd) {
 
         taskService.addTask(taskadd);
@@ -64,8 +69,18 @@ public class TaskController {
         return "redirect:/tasks";
     }
 
+    @GetMapping("/addemp")
+    public String addEmpToTask(@RequestParam Long empid, @RequestParam Long taskid) {
 
-    @GetMapping("/tasks/update")
+        Optional<Employee> employee = employeeRepository.findById(empid);
+        employee.get().getTasks().add(taskRepository.findById(taskid).get());
+        employeeRepository.save(employee.get());
+
+        return "redirect:/tasks";
+    }
+
+
+    @GetMapping("/update")
     public String updateTask(@RequestParam Long taskid, ModelMap modelMap) {
         //  System.out.println(officeService.getNoOfPeople(officeid));
 
@@ -77,7 +92,7 @@ public class TaskController {
     }
 
 
-    @GetMapping("/tasks/delete")
+    @GetMapping("/delete")
     public String deleteTask(@RequestParam Long taskid) {
 
         taskService.deleteTaskById(taskid);

@@ -1,96 +1,109 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="fragments/head :: head"></head>
+<!--<html lang="en" dir="ltr">-->
+<!--<head th:replace="fragments/head :: head"></head>-->
+
+<head>
+    <meta charset="utf-8">
+    <title>The Company</title>
+    <link rel="shortcut icon" type="image/png"
+          href="http://jacksonvilleartwalk.com/wp-content/themes/DowntownVision.Wordpress.Theme/images/slides/participate/img-small-artistapply.png">
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
+
+    <style type="text/css" class="init"></style>
+    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" language="javascript"
+            src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript"
+            src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" language="javascript"
+            src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+    <script type="text/javascript" language="javascript"
+            src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" language="javascript"
+            src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+
+
+    <script type="text/javascript" class="init">
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                responsive: true
+            });
+            new $.fn.dataTable.FixedHeader(table);
+        });
+    </script>
+</head>
+
+
 <body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">The Company</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="#">Home</a></li>
+            <li class="active"><a th:href="@{'/tasks'}">Tasks</a></li>
+            <li ><a th:href="@{'/offices'}">Offices</a></li>
+            <li><a th:href="@{'/employees'}">Employees</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <!--  <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>-->
+            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>Logout</a></li>
+        </ul>
+    </div>
+</nav>
 
-<head th:replace="fragments/nav :: nav"></head>
 
-<div>Test teks
-    <br>
-    <br>
 </div>
-<div class="container" style="width:95%">
+<div class="container" style="width:95% ; margin-top: 60px">
     <table id="example" class="table table-striped table-bordered nowrap " style="width:100%">
         <thead>
         <tr>
             <th>Id</th>
-            <th>Name</th>
+            <th>Task title</th>
             <th>Description</th>
             <th>Priority</th>
+            <th>Task Team</th>
             <th>Start at</th>
             <th>End at</th>
-            <th>Update</th>
-            <th>Delete</th>
             <th>Add Emp</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tbody>
-
-        <!--     tr for update
-
-         <tr th:if="${update}">
-
-              <form th:action="@{/offices/update/send}" th:object="${officesend}" method="GET" >
-             <form th:action="@{/offices/add}" th:object="${office}" method="Post" action="/offices/add">
-
-                 <td>
-                     <input type="hidden" name="id" th:field="${officetoupdate.id}">
-                     <input type="text" name="name" th:value="${officetoupdate.name}" class="form-control">
-                 </td>
-
-
-                 <td>
-                     <button type="submit" th:if="${update}" class="btn btn-primary"><i class="fa fa-plus-square"
-                                                                                        aria-hidden="true"></i> Update
-                     </button>
-                 </td>
-
-             </form>
-         </tr>
-
-             end tr for update-->
-
-        <tr th:if="!${update}">
-            <form th:action="@{/tasks/add}" th:object="${taskadd}" method="Post" action="/tasks/add">
-                <td>
-                    <input type="text" placeholder="auto increase" class="form-control" disabled>
-                </td>
-                <td>
-                    <input type="text" name="name" placeholder="Task name" class="form-control">
-                </td>
-                <td>
-                    <input type="text" name="description" placeholder="Description" class="form-control">
-                </td>
-                <td>
-                    <!--   <input type="text"  placeholder="Priority" class="form-control">-->
-                    <select name="priority" class="form-control">
-                        <option value="HIGH" style="color:#FF0000">HIGH</option>
-                        <option value="NORMAL" style="color:#FFD700">NORMAL</option>
-                        <option value="LOW" style="color:#32CD32">LOW</option>
-                    </select>
-                </td>
-                <td>
-                    <input type="date" name="start_at" placeholder="YYYY-MM-DD" class="form-control">
-                </td>
-                <td>
-                    <input type="date" name="end_at" placeholder="YYYY-MM-DD" class="form-control">
-                </td>
-                <td>
-                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus-square"
-                                                                            aria-hidden="true"></i>
-                        Add
-                    </button>
-                </td>
-            </form>
-        </tr>
         <!--TABLE WITH DATA OFFICES-->
         <tr th:each="t:${tasklist}">
-            <td th:text="${t.id}"></td>
-            <td th:text="${t.name}"></td>
-            <td th:text="${t.description}">
-            <td th:text="${t.priority}"></td>
+            <td th:text="${t.id}" />
+            <td th:text="${t.name}" />
+            <td th:text="${t.description}" style="width:200px" />
+            <td th:text="${t.priority}" />
+            <td>
+                <li th:each="emp:${t.taskEmpList}">
+                    <a th:href="@{'/employees/details?empid='+${emp.id}}">
+                        <small th:text="${emp.name} + ' ' + ${emp.surname}"/>
+                    </a>
+                </li>
+            </td>
             <td th:text="${t.Start_at}"></td>
             <td th:text="${t.End_at}"></td>
+            <td>
+                <form action="/tasks/addemp" method="get">
+                    <input type="hidden" th:value="${t.id}" name="taskid">
+                    <div class="form-group  ">
+                        <input type="number" min="0" max="999" name="empid" class="form-control">
+                    </div>
+                    <button class="btn btn-sm btn-primary" type="submit">addEmp
+                    </button>
+                </form>
+            </td>
             <td>
                 <form action="/tasks/update" method="get">
                     <!--  <input type="hidden" th:value="${office.id}" name="officeid">-->
@@ -107,28 +120,20 @@
                     </button>
                 </form>
             </td>
-            <td>
-                <form action="/tasks/addemp" method="get">
-                    <input type="hidden" th:value="${t.id}" name="taskeid" width="30px">
-                    <input type="text" name="empid" class="form-control">
-                    <button class="btn btn-sm btn-warning" type="submit">
-                        <i class="fa fa-trash" aria-hidden="true"></i> addEmp
-                    </button>
-                </form>
-            </td>
         </tr>
         </tbody>
         <tfoot>
         <tr>
             <th>Id</th>
-            <th>Name</th>
+            <th>Task title</th>
             <th>Description</th>
             <th>Priority</th>
+            <th>Task Team</th>
             <th>Start at</th>
             <th>End at</th>
-            <th>Update</th>
-            <th>Delete</th>
             <th>Add Emp</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
         </tfoot>
     </table>
@@ -139,26 +144,62 @@
 </body>
 </html>
 
-
 <!--
 
-linki z navbaru
+&lt;!&ndash;     tr for update
 
-<link rel="icon" href="../../favicon.ico">
-<link rel="canonical" href="https://getbootstrap.com/docs/3.3/examples/navbar-fixed-top/">
+     <tr th:if="${update}">
 
-<title>Fixed Top Navbar Example for Bootstrap</title>
+          <form th:action="@{/offices/update/send}" th:object="${officesend}" method="GET" >
+         <form th:action="@{/offices/add}" th:object="${office}" method="Post" action="/offices/add">
 
-&lt;!&ndash; Bootstrap core CSS &ndash;&gt;
-<link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+             <td>
+                 <input type="hidden" name="id" th:field="${officetoupdate.id}">
+                 <input type="text" name="name" th:value="${officetoupdate.name}" class="form-control">
+             </td>
 
-&lt;!&ndash; IE10 viewport hack for Surface/desktop Windows 8 bug &ndash;&gt;
-<link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
-&lt;!&ndash; Custom styles for this template &ndash;&gt;
-<link href="navbar-fixed-top.css" rel="stylesheet">
+             <td>
+                 <button type="submit" th:if="${update}" class="btn btn-primary"><i class="fa fa-plus-square"
+                                                                                    aria-hidden="true"></i> Update
+                 </button>
+             </td>
 
-&lt;!&ndash; Just for debugging purposes. Don't actually copy these 2 lines! &ndash;&gt;
-&lt;!&ndash;[if lt IE 9]>
-<script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]&ndash;&gt;
-<script src="../../assets/js/ie-emulation-modes-warning.js"></script>-->
+         </form>
+     </tr>
+
+         end tr for update&ndash;&gt;
+
+<tr th:if="!${update}">
+    <form th:action="@{/tasks/add}" th:object="${taskadd}" method="Post" action="/tasks/add">
+        <td>
+            <input type="text" placeholder="auto increase" class="form-control" disabled>
+        </td>
+        <td>
+            <input type="text" name="name" placeholder="Task name" class="form-control">
+        </td>
+        <td>
+            <input type="text" name="description" placeholder="Description" class="form-control">
+        </td>
+        <td>
+            &lt;!&ndash;   <input type="text"  placeholder="Priority" class="form-control">&ndash;&gt;
+            <select name="priority" class="form-control">
+                <option value="HIGH" style="color:#FF0000">HIGH</option>
+                <option value="NORMAL" style="color:#FFD700">NORMAL</option>
+                <option value="LOW" style="color:#32CD32">LOW</option>
+            </select>
+        </td>
+        <td>
+            <input type="date" name="start_at" placeholder="YYYY-MM-DD" class="form-control">
+        </td>
+        <td>
+            <input type="date" name="end_at" placeholder="YYYY-MM-DD" class="form-control">
+        </td>
+        <td>
+            <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus-square"
+                                                                    aria-hidden="true"></i>
+                Add
+            </button>
+        </td>
+    </form>
+</tr>-->
