@@ -7,6 +7,7 @@ import com.gwd.thecompany.repository.EmployeeRepository;
 import com.gwd.thecompany.repository.OfficeRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.BitSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,18 +42,25 @@ public class OfficeService {
 
     public Office getOfficeById(Long officeId) {
 
-        Optional<Office> office = officeRepository.findById(officeId);
+        /*Optional<Office> office = officeRepository.findById(officeId);*/
 
-        return office.get();
+        return officeRepository.findById(officeId).get();
     }
 
-    public Office addOffice(Office office) {
-        return officeRepository.save(office);
+//    public Office addOffice(Office office) {
+//        return officeRepository.save(office);
+//    }
+
+    public Office addOfficeDto(OfficeDto officeDto) {
+
+        return officeRepository.save(officeMapper.revers(officeDto));
     }
 
     public void deleteOffice(Office office) {
         officeRepository.delete(office);
     }
+
+
 
     public void updateOffice(Office office) {
         officeRepository.save(office);
@@ -67,6 +75,10 @@ public class OfficeService {
 
         return employeeRepository.getNoOfPeoleInOneOfficeById(officeId);
     }
+
+
+
+
 
 
 /*

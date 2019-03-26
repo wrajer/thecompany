@@ -1,5 +1,6 @@
 package com.gwd.thecompany.controller.restcontrollers;
 
+import com.gwd.thecompany.model.Dto.OfficeDto;
 import com.gwd.thecompany.model.Employee;
 import com.gwd.thecompany.model.Office;
 import com.gwd.thecompany.service.EmployeeService;
@@ -30,8 +31,9 @@ public class OfficeRestController {
 
 
     @PostMapping("/offices")
-    public Office addOffice(@RequestBody Office office) {
-        return officeService.addOffice(office);
+    public Office addOffice(@RequestBody OfficeDto office) {
+
+        return officeService.addOfficeDto(office);
 
     }
 

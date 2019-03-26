@@ -45,9 +45,17 @@ public class OfficeMapper implements Mapper<Office, OfficeDto> {
     }
 
     @Override
-    public Office revers(OfficeDto from) {
-        //todo dopisać funkcje
-        return null;
+    public Office revers(OfficeDto to) {
+
+        return Office
+                .builder()
+                .adress(to.getAdress())
+                .costPerMonth(to.getCostPerMonth())
+                .name(to.getName())
+                .noOfDesks(to.getNoOfDesks())
+               /* .id(to.getId())
+                .employeesList(to.getEmployeesList())*/
+                .build();
     }
 
 

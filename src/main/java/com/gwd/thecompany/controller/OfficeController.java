@@ -28,10 +28,6 @@ public class OfficeController {
     @Autowired
     private OfficeService officeService;
 
-    //todo remove repository from controllers
-    @Autowired
-    private OfficeRepository officeRepository;
-
     @Autowired
     EmployeeRepository employeeRepository;
 
@@ -45,18 +41,19 @@ public class OfficeController {
 
 
     @PostMapping("/offices/add")
-    public String addOffice(@ModelAttribute Office office) { //nie działa na zwykłym office ehh
+    public String addOfficeDto(@ModelAttribute OfficeDto office) {
 
-        officeService.addOffice(office);
+        officeService.addOfficeDto(office);
 
         return "redirect:/offices";
     }
+
 
     @GetMapping("/offices/addemp")
     public String addEmpToOffices(@RequestParam Long empid, @RequestParam Long officeid) {
 
         Optional<Employee> employee = employeeRepository.findById(empid);
-        employee.get().setOffice(officeRepository.findById(officeid).get()); //zamist set mamy add, get list  pozniej add
+        employee.get().setOffice(officeService.getOfficeById(officeid)); //zamist set mamy add, get list  pozniej add
         employeeRepository.save(employee.get());
 
         return "redirect:/offices";
