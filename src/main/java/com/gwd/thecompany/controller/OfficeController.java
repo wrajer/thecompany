@@ -2,6 +2,7 @@ package com.gwd.thecompany.controller;
 
 import com.gwd.thecompany.common.CreatorXLS;
 import com.gwd.thecompany.model.Dto.OfficeDto;
+import com.gwd.thecompany.model.Dto.OfficeDtoExcel;
 import com.gwd.thecompany.model.Employee;
 import com.gwd.thecompany.model.Office;
 import com.gwd.thecompany.model.Task;
@@ -41,9 +42,10 @@ public class OfficeController {
 
 
     @PostMapping("/offices/add")
-    public String addOfficeDto(@ModelAttribute OfficeDto office) {
+    public String addOfficeDto(@ModelAttribute OfficeDto  office) {
 
         officeService.addOfficeDto(office);
+       // officeService.addOffice (office);
 
         return "redirect:/offices";
     }
@@ -75,15 +77,15 @@ public class OfficeController {
         return "redirect:/offices";
     }
 
-    @GetMapping("/offices/excel")
+/*    @GetMapping("/offices/excel")
     public String createFile() throws NoSuchMethodException,
             IOException, IllegalAccessException, InvocationTargetException {
 
-        CreatorXLS<Office> creatorXLS = new CreatorXLS<>(Office.class);
-        creatorXLS.createFile(officeService.getOffices(), "src/main/resources", "OfficesList");
+        CreatorXLS<OfficeDtoExcel> creatorXLS = new CreatorXLS<>(OfficeDtoExcel.class);
+        creatorXLS.createFile(officeService.getOfficesDtoExcel(), "src/main/resources", "OfficesList");
 
         return "redirect:/offices";
-    }
+    }*/
 
 
 }

@@ -1,12 +1,15 @@
 package com.gwd.thecompany.service;
 
+import com.gwd.thecompany.mapper.OfficeExcelMapper;
 import com.gwd.thecompany.mapper.OfficeMapper;
 import com.gwd.thecompany.model.Dto.OfficeDto;
+import com.gwd.thecompany.model.Dto.OfficeDtoExcel;
 import com.gwd.thecompany.model.Office;
 import com.gwd.thecompany.repository.EmployeeRepository;
 import com.gwd.thecompany.repository.OfficeRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
 import java.util.Optional;
@@ -17,11 +20,13 @@ public class OfficeService {
 
     private OfficeRepository officeRepository;
     private OfficeMapper officeMapper;
+    private OfficeExcelMapper officeExcelMapper;
     private EmployeeRepository employeeRepository;
 
-    public OfficeService(OfficeRepository officeRepository, OfficeMapper officeMapper, EmployeeRepository employeeRepository) {
+    public OfficeService(OfficeRepository officeRepository, OfficeMapper officeMapper, OfficeExcelMapper officeExcelMapper, EmployeeRepository employeeRepository) {
         this.officeRepository = officeRepository;
         this.officeMapper = officeMapper;
+        this.officeExcelMapper = officeExcelMapper;
         this.employeeRepository = employeeRepository;
     }
 
@@ -39,6 +44,14 @@ public class OfficeService {
                 .collect(Collectors.toList());
     }
 
+   /* public List<OfficeDtoExcel> getOfficesDtoExcel() {
+
+        return officeRepository
+                .findAll()
+                .stream()
+                .map(officeExcelMapper::map)
+                .collect(Collectors.toList());
+    }*/
 
     public Office getOfficeById(Long officeId) {
 
@@ -56,10 +69,13 @@ public class OfficeService {
         return officeRepository.save(officeMapper.revers(officeDto));
     }
 
+    public Office addOffice(Office office) {
+        return officeRepository.save(office);
+    }
+
     public void deleteOffice(Office office) {
         officeRepository.delete(office);
     }
-
 
 
     public void updateOffice(Office office) {
@@ -81,6 +97,9 @@ public class OfficeService {
 
 
 
+
+
+
 /*
     public List<OfficeDto> getOfficessDto() {
 
@@ -90,6 +109,8 @@ public class OfficeService {
                 .map(officeMapper::map)
                 .collect(Collectors.toList());
     }
+
+
 
     public Office addOffice(OfficeDto officeDto) {
         return officeRepository.save(officeMapper.revers(officeDto));

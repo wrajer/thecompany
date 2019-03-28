@@ -2,6 +2,7 @@ package com.gwd.thecompany.mapper;
 
 import com.gwd.thecompany.common.Mapper;
 import com.gwd.thecompany.model.Dto.OfficeDto;
+import com.gwd.thecompany.model.Dto.OfficeDtoExcel;
 import com.gwd.thecompany.model.Employee;
 import com.gwd.thecompany.model.Office;
 import com.gwd.thecompany.repository.OfficeRepository;
@@ -14,40 +15,37 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-public class OfficeMapper implements Mapper<Office, OfficeDto> {
-
-
+public class OfficeExcelMapper implements Mapper<Office, OfficeDtoExcel> {
 
     OfficeService officeService;
 
-    public OfficeMapper(OfficeService officeService) {
+    public OfficeExcelMapper(OfficeService officeService) {
         this.officeService = officeService;
     }
 
     @Override
-    public OfficeDto map(Office f) {
+    public OfficeDtoExcel map(Office f) {
 
-    /*    List<String> emps = f
+        List<String> emps = f
                 .getEmployeesList()
                 .stream()
                 .map(EmpsToStringList.INSTANCE)
-                .collect(Collectors.toList());*/
+                .collect(Collectors.toList());
 
-        return OfficeDto
+        return OfficeDtoExcel
                 .builder()
                 .id(f.getId())
                 .adress(f.getAdress())
                 .costPerMonth(f.getCostPerMonth())
                 .name(f.getName())
                 .noOfDesks(f.getNoOfDesks())
-                .employeesList(f.getEmployeesList())
-               /* .employeesList(emps)*/
+                .employeesList(emps)
                 .noPeople(officeService.getNoOfPeopleById(f.getId()))
                 .build();
     }
 
     @Override
-    public Office revers(OfficeDto to) {
+    public Office revers(OfficeDtoExcel to) {
 
         return Office
                 .builder()
@@ -56,8 +54,6 @@ public class OfficeMapper implements Mapper<Office, OfficeDto> {
                 .costPerMonth(to.getCostPerMonth())
                 .name(to.getName())
                 .noOfDesks(to.getNoOfDesks())
-               /* .id(to.getId())
-                .employeesList(to.getEmployeesList())*/
                 .build();
     }
 
